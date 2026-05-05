@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars and fill in your values
+project      = "damolak-devops-app"
+environment  = "prod"
+aws_region   = "eu-west-1"
+alert_email  = "devops@damolak.com"
+image_tag    = "latest"
