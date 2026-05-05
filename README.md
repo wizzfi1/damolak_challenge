@@ -72,10 +72,11 @@
 │   └── environments/
 │       └── prod/            # Root module wiring all modules together
 ├── .github/workflows/
-│   └── ci-cd.yml            # GitHub Actions CI/CD pipeline
+│   └── ci-cd.yml            # GitHub Actions CI/CD pipeline (functional alternative)
 ├── scripts/
 │   ├── bootstrap-state.sh   # One-time: creates S3 bucket + DynamoDB lock table
 │   └── setup-oidc.sh        # One-time: creates IAM OIDC provider + role for GitHub Actions
+├── Jenkinsfile              # Jenkins pipeline (preferred CI/CD option)
 ├── docker-compose.yml       # Local development
 └── README.md
 ```
@@ -180,6 +181,28 @@ curl http://localhost:8080/metrics
 # Run tests
 cd app && pip install -r requirements.txt && pytest -v
 ```
+
+---
+
+## CI/CD Pipeline
+
+Two pipeline implementations are provided. Jenkins is the preferred option.
+
+### Jenkins (Preferred)
+
+The `Jenkinsfile` at the repo root defines a declarative pipeline with five stages. To use it:
+
+1. Spin up a Jenkins instance (EC2 t3.small or Docker)
+2. Install plugins: **Pipeline**, **Git**, **Docker Pipeline**, **Amazon ECR**, **AWS Credentials**, **Terraform**
+3. Add AWS credentials: **Manage Jenkins → Credentials → Add → AWS Credentials** (ID: `aws-credentials`)
+4. Create a **Pipeline** job pointing at this repository — Jenkins auto-detects the `Jenkinsfile`
+5. Push to `main` to trigger a build
+
+Stages run on every push; ECR push, Terraform apply, and ECS deploy are gated to the `main` branch only.
+
+### GitHub Actions (Alternative)
+
+`.github/workflows/ci-cd.yml` is a fully functional alternative that requires no additional infrastructure. It uses OIDC authentication (no stored AWS credentials). See [Step 4 — Deploy via CI/CD](#4-deploy-via-cicd) for setup.
 
 ---
 
