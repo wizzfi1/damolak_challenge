@@ -3,7 +3,8 @@
 # Run once before the first `terraform apply`. Safe to re-run — checks existence first.
 set -euo pipefail
 
-BUCKET="damolak-terraform-state"
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+BUCKET="damolak-terraform-state-${ACCOUNT_ID}"
 TABLE="damolak-terraform-locks"
 REGION="${AWS_REGION:-eu-west-1}"
 

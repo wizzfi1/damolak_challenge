@@ -10,7 +10,7 @@ terraform {
 
   # Remote state in S3 — create the bucket manually before first apply
   backend "s3" {
-    bucket         = "damolak-terraform-state"
+    bucket         = "damolak-terraform-state-775143001467"
     key            = "prod/terraform.tfstate"
     region         = "eu-west-1"
     dynamodb_table = "damolak-terraform-locks"

@@ -12,9 +12,10 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "ECS CPU Utilization"
-          period = 300
-          stat   = "Average"
+          title   = "ECS CPU Utilization"
+          region  = var.aws_region
+          period  = 300
+          stat    = "Average"
           metrics = [["AWS/ECS", "CPUUtilization",
             "ClusterName", var.cluster_name,
             "ServiceName", var.service_name]]
@@ -27,9 +28,10 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "ECS Memory Utilization"
-          period = 300
-          stat   = "Average"
+          title   = "ECS Memory Utilization"
+          region  = var.aws_region
+          period  = 300
+          stat    = "Average"
           metrics = [["AWS/ECS", "MemoryUtilization",
             "ClusterName", var.cluster_name,
             "ServiceName", var.service_name]]
@@ -42,9 +44,10 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "ALB Request Count"
-          period = 300
-          stat   = "Sum"
+          title   = "ALB Request Count"
+          region  = var.aws_region
+          period  = 300
+          stat    = "Sum"
           metrics = [["AWS/ApplicationELB", "RequestCount",
             "LoadBalancer", var.alb_arn_suffix]]
         }
@@ -56,9 +59,10 @@ resource "aws_cloudwatch_dashboard" "main" {
         width  = 12
         height = 6
         properties = {
-          title  = "ALB 5xx Errors"
-          period = 300
-          stat   = "Sum"
+          title   = "ALB 5xx Errors"
+          region  = var.aws_region
+          period  = 300
+          stat    = "Sum"
           metrics = [["AWS/ApplicationELB", "HTTPCode_ELB_5XX_Count",
             "LoadBalancer", var.alb_arn_suffix]]
         }
